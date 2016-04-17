@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.SortOperation">
+	<insert id="addSort" parameterType="com.wangziqing.goubige.model.Sort" 
+	useGeneratedKeys="true" keyProperty="ID">
+			insert into sorts values(
+			#{ID},#{upperId},#{content},null);
+	</insert>
+	<resultMap type="com.wangziqing.goubige.model.Sort" id="sorts"></resultMap>
+	<select id="getBigSorts" resultMap="sorts"> 
+        select * from sorts where upperID='1' and ID!='1';
+    </select> 
+</mapper>

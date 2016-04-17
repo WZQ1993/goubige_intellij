@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.UsersOperation">
+	<insert id="insert" parameterType="com.wangziqing.goubige.model.Users"
+		useGeneratedKeys="true" keyProperty="ID">
+		insert into users values(
+		<!-- (`ID`, `userName`, `realName`, `passWord`, `telePhone`, `email`, `gender`, 
+			`age`, `userImg`, `info`, `isDelete`) -->
+		#{ID},
+		#{userName},
+		#{realName},
+		#{passWord},
+		#{telePhone},
+		#{email},
+		#{gender},
+		#{age},
+		#{userImg},
+		#{info},
+		'0',
+		null,null);
+	</insert>
+	<update id="update" parameterType="com.wangziqing.goubige.model.Users"
+		useGeneratedKeys="true" keyProperty="ID">
+		update users set
+		userName=#{userName},
+		realName=#{realName},
+		passWord=#{passWord},
+		telePhone=#{telePhone},
+		email=#{email},
+		gender=#{gender},
+		age=#{age},
+		userImg=#{userImg},
+		info=#{info}
+		where ID=#{ID};
+	</update>
+	<select id="getByID" parameterType="int"
+		resultType="com.wangziqing.goubige.model.Users" useCache="true">
+		select * from
+		users where ID=#{ID};
+	</select>
+	<!-- 多参数用索引 -->
+	<select id="getIDByPhoneAndEmail" 
+		resultType="int" useCache="true">
+		select ID from
+		users where telePhone=#{0} or email=#{1};
+	</select>
+	<select id="getByPhoneAndEmail" 
+		resultType="com.wangziqing.goubige.model.Users" useCache="true">
+		select * from
+		users where (telePhone=#{0} or email=#{1})and passWord=#{2};
+	</select>
+	<update id="updateHeader">
+		update users set userImg=#{1} where ID=#{0};
+	</update>
+	
+</mapper>
