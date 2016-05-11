@@ -33,7 +33,6 @@ public class UsersController {
 		JSONObject jsonObject = JSON.parseObject(userJson);
 		Users user = JSON.parseObject(jsonObject.get("user").toString(),
 				Users.class);
-//		System.out.println(userJson);
 		user = usersService.getByPhoneAndEmail(user.getTelePhone(),
 				user.getEmail(), user.getPassWord());
 		if(null==user){
@@ -114,9 +113,18 @@ public class UsersController {
 		response.setHeader("Content-type", "text/html;charset=UTF-8");
 		response.getWriter().print(jsonObject.toString());
 	}
-	// public static void main(String[] args) {
-	// // TODO Auto-generated method stub
-	//
-	// }
+
+	@RequestMapping(value="",method=RequestMethod.GET)
+	public void getGoods(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		int pageSize,pageNum;
+		pageSize=Integer.parseInt(request.getParameter("pageSize"));
+		pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("pageNum", pageNum);
+		jsonObject.put("pageSize", pageSize);
+		jsonObject.put("data",usersService.getUserByPage(pageSize,pageNum));
+		response.setHeader("Content-type", "text/html;charset=UTF-8");
+		response.getWriter().print(jsonObject.toString());
+	}
 
 }

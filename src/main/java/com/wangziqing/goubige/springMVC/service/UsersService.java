@@ -2,6 +2,7 @@ package com.wangziqing.goubige.springMVC.service;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,13 @@ public class UsersService {
 	public Users getByID(int ID){
 		return userDaoImp.getByID(ID);
 	}
+	public List<Users> getUserByPage(int pageSize, int pageNum){
+		return userDaoImp.getUsersByPage(pageSize,pageNum);
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

@@ -52,5 +52,8 @@
 	<update id="updateHeader">
 		update users set userImg=#{1} where ID=#{0};
 	</update>
-	
+	<select id="getUsersByPage" resultType="com.wangziqing.goubige.model.Users" parameterType="com.wangziqing.goubige.model.PageBean">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select * from users limit #{startRow},#{pageSize};
+	</select>
 </mapper>
