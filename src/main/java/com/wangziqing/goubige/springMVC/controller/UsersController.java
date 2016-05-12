@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,14 +116,18 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="",method=RequestMethod.GET)
-	public void getGoods(HttpServletRequest request,HttpServletResponse response) throws IOException{
+	public void getUsers(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		int pageSize,pageNum;
 		pageSize=Integer.parseInt(request.getParameter("pageSize"));
 		pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		String tag= request.getParameter("tag");
+		System.out.println(pageNum+"-"+pageSize);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("pageNum", pageNum);
 		jsonObject.put("pageSize", pageSize);
-		jsonObject.put("data",usersService.getUserByPage(pageSize,pageNum));
+		jsonObject.put("users",usersService.getUserByPage(pageSize,pageNum));
+		jsonObject.put("method","getUsers");
+		jsonObject.put("tag",tag);
 		response.setHeader("Content-type", "text/html;charset=UTF-8");
 		response.getWriter().print(jsonObject.toString());
 	}
