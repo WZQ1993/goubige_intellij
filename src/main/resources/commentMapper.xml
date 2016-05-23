@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.CommentOperation">
+	<insert id="insert" parameterType="com.wangziqing.goubige.model.Comment"
+	useGeneratedKeys="true" keyProperty="ID">
+			insert into comment values(
+			#{ID},#{shareID},#{userID},#{content},CURRENT_TIMESTAMP);
+	</insert>
+	<select id="getCommentByPage" resultType="com.wangziqing.goubige.model.Comment" parameterType="com.wangziqing.goubige.model.PageBean">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select *,
+		users.userName as userName,
+		users.userImg as userImage
+		from comment,users
+		WHERE comment.shareID=#{2} and comment.userID=users.ID
+		limit #{0},#{1};
+	</select>
+</mapper>

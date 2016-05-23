@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.ShareOperation">
+	<insert id="insert" parameterType="com.wangziqing.goubige.model.Share"
+			useGeneratedKeys="true" keyProperty="ID">
+		insert into share values(
+		null,
+		#{goodID},
+		#{userID},
+		#{content},
+		0,
+		0,
+		CURRENT_TIMESTAMP);
+	</insert>
+	<update id="update" parameterType="com.wangziqing.goubige.model.Share"
+			useGeneratedKeys="true" keyProperty="ID">
+		update share set
+		goodID=#{goodID},
+		userID=#{userID},
+		content=#{content},
+		supportNum=#{supportNum},
+		commentNum=#{commentNum}
+		where ID=#{ID};
+	</update>
+	<select id="getShareByID" parameterType="int"
+			resultType="com.wangziqing.goubige.model.Share" useCache="true">
+		select * from
+		share where ID=#{ID};
+	</select>
+	<update id="supportNumIncrease" parameterType="int"
+			useGeneratedKeys="true" keyProperty="ID">
+		update share set
+		supportNum = supportNum+1
+		where ID=#{ID};
+	</update>
+	<update id="commentNumIncrease" parameterType="int"
+			useGeneratedKeys="true" keyProperty="ID">
+		update share set
+		commentNum=commentNum+1
+		where ID=#{ID};
+	</update>
+	<select id="getShareByPage" resultType="com.wangziqing.goubige.model.Share" parameterType="com.wangziqing.goubige.model.PageBean">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select share.*,
+		goods.pic as goodImage,
+		goods.title as goodTitle,
+		users.userImg as userImage,
+		users.userName as userName,
+		goods.url as goodUrl,
+		goods.priceCurrent as goodPriceCurrent,
+		goods.priceOld as goodPriceOld,
+		goods.from as goodFrom
+		from share,goods,users
+		WHERE share.goodID=goods.ID and share.userID=users.ID
+		limit #{startRow},#{pageSize};
+	</select>
+</mapper>

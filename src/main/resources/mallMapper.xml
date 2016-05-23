@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.MallOperation">
+	<insert id="insert" parameterType="com.wangziqing.goubige.model.Mall"
+	useGeneratedKeys="true" keyProperty="ID">
+			insert into mall values(
+			#{ID},#{name},#{goods_from},#{img},#{img_w},#{img_h},#{order_num});
+	</insert>
+
+</mapper>

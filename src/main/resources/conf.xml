@@ -15,7 +15,12 @@
 	</environments>
 	<mappers>
         <mapper resource="goodMapper.xml"/>
+		<mapper resource="goodsMapper.xml"/>
         <mapper resource="sortMapper.xml"/>
         <mapper resource="userMapper.xml"/>
+		<mapper resource="shareMapper.xml"/>
+		<mapper resource="commentMapper.xml"/>
+		<mapper resource="mallMapper.xml"/>
+		<mapper resource="categoryMapper.xml"/>
     </mappers>
 </configuration>

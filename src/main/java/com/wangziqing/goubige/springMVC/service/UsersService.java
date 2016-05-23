@@ -1,17 +1,13 @@
 package com.wangziqing.goubige.springMVC.service;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wangziqing.goubige.model.Users;
 import com.wangziqing.goubige.mybatis.daoImp.UserDaoImp;
 import com.wangziqing.goubige.springMVC.utils.FilesUtils;
-import com.wangziqing.goubige.springMVC.utils.ProjectString;
 
 @Service
 public class UsersService {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.CategoryOperation">
+	<insert id="insert" parameterType="com.wangziqing.goubige.model.Category"
+	useGeneratedKeys="true" keyProperty="ID">
+			insert into category values(
+			#{ID},#{title},#{url_nicktitle});
+	</insert>
+	<select id="getCategorys" resultType="com.wangziqing.goubige.model.Category">
+		select * from category;
+	</select>
+</mapper>

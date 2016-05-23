@@ -5,7 +5,7 @@ namespace的值习惯上设置成包名+sql映射文件名，
 这样就能够保证namespace的值是唯一的 
 例如namespace=
 "me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
-<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.GoodOperation">
+<mapper namespace="com.wangziqing.goubige.mybatis.daoBase.GoodsOperation">
 	<!-- 在select标签中编写查询的SQL语句， 
 	设置select标签的id属性为getUser，
 	id属性值必须是唯一的，
@@ -18,33 +18,29 @@ namespace的值习惯上设置成包名+sql映射文件名，
 		若type为Good对应，mybatis可以直接注入属性值
 		type可以指定为其他类型，需要制定属性对应值，如GoodTitle,指定只注入title
 	-->
-	<resultMap type="com.wangziqing.goubige.model.Good" id="goods">
+	<resultMap type="com.wangziqing.goubige.model.Goods" id="goods">
 		<!--<result column="title" property="title"/>-->
     </resultMap> 
 	<!-- 根据id查询得到一个user对象 -->
-	<insert id="addGood" parameterType="com.wangziqing.goubige.model.Good" 
+	<insert id="addGood" parameterType="com.wangziqing.goubige.model.Goods"
 	useGeneratedKeys="true" keyProperty="ID">
-			insert into goods values(
+			insert into good values(
 			#{ID},
 			#{title},
 			#{url},
 			#{pic},
-			#{sold},
-			#{priceCurrent},
-			#{priceOld},
-			#{discount},
-			#{from},
-			null,null,null,null,
-			#{blockId},
-			#{tagId},
-			null,null,null,null,CURRENT_TIMESTAMP);
+			#{price},
+			#{mall},
+			#{date},
+			#{categoryID}
+			)
 	</insert>
-	<select id="getGoodByID" parameterType="String" resultType="com.wangziqing.goubige.model.Good"
+	<select id="getGoodByID" parameterType="String" resultType="com.wangziqing.goubige.model.Goods"
 	useCache="true">
-			select * from goods where ID=#{ID}
+			select * from good where ID=#{ID}
 	</select>
 	<select id="getGoodsByPage" resultMap="goods" parameterType="com.wangziqing.goubige.model.PageBean"> 
         <!-- order by id asc是指对查询后的结果进行升序排序 --> 
-        select * from goods limit #{startRow},#{pageSize};
+        select * from good limit #{startRow},#{pageSize};
     </select> 
 </mapper>

@@ -17,7 +17,7 @@
 		#{userImg},
 		#{info},
 		'0',
-		null,null);
+		CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 	</insert>
 	<update id="update" parameterType="com.wangziqing.goubige.model.Users"
 		useGeneratedKeys="true" keyProperty="ID">
