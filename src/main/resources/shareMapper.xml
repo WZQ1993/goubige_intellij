@@ -42,16 +42,15 @@
 	<select id="getShareByPage" resultType="com.wangziqing.goubige.model.Share" parameterType="com.wangziqing.goubige.model.PageBean">
 		<!-- order by id asc是指对查询后的结果进行升序排序 -->
 		select share.*,
-		goods.pic as goodImage,
-		goods.title as goodTitle,
+		good.pic as goodImage,
+		good.title as goodTitle,
 		users.userImg as userImage,
 		users.userName as userName,
-		goods.url as goodUrl,
-		goods.priceCurrent as goodPriceCurrent,
-		goods.priceOld as goodPriceOld,
-		goods.from as goodFrom
-		from share,goods,users
-		WHERE share.goodID=goods.ID and share.userID=users.ID
+		good.url as goodUrl,
+		good.price as goodPrice,
+		good.mall as goodMall
+		from share,good,users
+		WHERE share.goodID=good.ID and share.userID=users.ID
 		limit #{startRow},#{pageSize};
 	</select>
 </mapper>

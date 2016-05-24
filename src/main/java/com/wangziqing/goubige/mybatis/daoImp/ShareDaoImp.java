@@ -77,7 +77,7 @@ public class ShareDaoImp {
         ShareDaoImp shareDaoImp=new ShareDaoImp();
         for(int i=0;i<100;i++){
             Share share=new Share();
-            share.setGoodID("-10179572");
+            share.setGoodID(18960);
             share.setUserID(151);
             share.setContent("推荐内容"+i+"：强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品");
             shareDaoImp.insert(share);
@@ -86,15 +86,15 @@ public class ShareDaoImp {
     private static void testUpdate(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
         Share share=new Share();
-        share.setID(104);
-        share.setGoodID("-10179572");
+        share.setID(204);
+        share.setGoodID(18960);
         share.setUserID(151);
-        share.setContent("推荐内容1：强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品强烈推荐这个商品");
+        share.setContent("推荐内容1：强烈推荐这个商品!!!");
         shareDaoImp.update(share);
     }
     private static void testGetByID(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
-        System.out.println(shareDaoImp.getShareByID(104).toString());
+        System.out.println(shareDaoImp.getShareByID(204).toString());
     }
     private static void testGetByPage(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
@@ -105,8 +105,8 @@ public class ShareDaoImp {
     }
     private static void testIncrease(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
-        shareDaoImp.supportNumIncrease(104);
-        shareDaoImp.commentNumIncrease(104);
+        shareDaoImp.supportNumIncrease(204);
+        shareDaoImp.commentNumIncrease(204);
     }
     public static void main(String[] args){
         testIncrease();

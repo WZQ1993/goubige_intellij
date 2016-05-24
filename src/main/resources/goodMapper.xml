@@ -22,29 +22,25 @@ namespace的值习惯上设置成包名+sql映射文件名，
 		<!--<result column="title" property="title"/>-->
     </resultMap> 
 	<!-- 根据id查询得到一个user对象 -->
-	<insert id="addGood" parameterType="com.wangziqing.goubige.model.Good" 
+	<insert id="addGood" parameterType="com.wangziqing.goubige.model.Good"
 	useGeneratedKeys="true" keyProperty="ID">
-			insert into goods values(
+			insert into good values(
 			#{ID},
 			#{title},
 			#{url},
 			#{pic},
-			#{sold},
-			#{priceCurrent},
-			#{priceOld},
-			#{discount},
-			#{from},
-			null,null,null,null,
-			#{blockId},
-			#{tagId},
-			null,null,null,null,CURRENT_TIMESTAMP);
+			#{price},
+			#{mall},
+			#{date},
+			#{categoryID}
+			)
 	</insert>
 	<select id="getGoodByID" parameterType="String" resultType="com.wangziqing.goubige.model.Good"
 	useCache="true">
-			select * from goods where ID=#{ID}
+			select * from good where ID=#{ID}
 	</select>
 	<select id="getGoodsByPage" resultMap="goods" parameterType="com.wangziqing.goubige.model.PageBean"> 
         <!-- order by id asc是指对查询后的结果进行升序排序 --> 
-        select * from goods limit #{startRow},#{pageSize};
+        select * from good limit #{startRow},#{pageSize};
     </select> 
 </mapper>

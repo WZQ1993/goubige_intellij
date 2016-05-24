@@ -1,10 +1,9 @@
 package com.wangziqing.goubige.mybatis.daoBase;
 
-import java.util.List;
-
-
 import com.wangziqing.goubige.model.Good;
 import com.wangziqing.goubige.model.PageBean;
+
+import java.util.List;
 
 public interface GoodOperation {
 	

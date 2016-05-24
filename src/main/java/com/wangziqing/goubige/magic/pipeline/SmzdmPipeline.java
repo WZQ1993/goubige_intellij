@@ -1,14 +1,9 @@
 package com.wangziqing.goubige.magic.pipeline;
 
-import com.google.common.collect.Lists;
-import com.wangziqing.goubige.model.Category;
 import com.wangziqing.goubige.model.Good;
-import com.wangziqing.goubige.model.Goods;
-import com.wangziqing.goubige.model.Mall;
 import com.wangziqing.goubige.mybatis.daoBase.DaoFactory;
 import com.wangziqing.goubige.mybatis.daoImp.CategoryDaoImp;
 import com.wangziqing.goubige.mybatis.daoImp.GoodDaoImp;
-import com.wangziqing.goubige.mybatis.daoImp.GoodsDaoImp;
 import com.wangziqing.goubige.mybatis.daoImp.MallDaoImp;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -19,7 +14,7 @@ import java.util.List;
 public class SmzdmPipeline implements Pipeline {
 	MallDaoImp mallDaoImp=DaoFactory.getMallDaoImp();
 	CategoryDaoImp categoryDaoImp=DaoFactory.getCategoryDaoImp();
-	GoodsDaoImp goodDaoImp=DaoFactory.getGoodDaoImp();
+	GoodDaoImp goodDaoImp=DaoFactory.getGoodDaoImp();
 	@Override
 	public void process(ResultItems resultItems, Task task) {
 		// TODO Auto-generated method stub
@@ -33,7 +28,7 @@ public class SmzdmPipeline implements Pipeline {
 //			System.out.println(mall.toString());
 //		}
 //		mallDaoImp.insertAll(MallList);
-		List<Goods> list=resultItems.get("goodList");
+		List<Good> list=resultItems.get("goodList");
 		goodDaoImp.addGoods(list);
 	}
 

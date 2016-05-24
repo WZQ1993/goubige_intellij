@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 public class Share implements Serializable{
     private int ID;
-    private String goodID;
+    private int goodID;
     private int userID;
     private String content;
     private int supportNum;
@@ -22,9 +22,8 @@ public class Share implements Serializable{
     private String userName;
 
     private String goodUrl;
-    private String goodPriceCurrent;
-    private String goodPriceOld;
-    private int goodFrom;
+    private String goodPrice;
+    private String goodMall;
 
     public int getSupportNum() {
         return supportNum;
@@ -50,11 +49,11 @@ public class Share implements Serializable{
         this.userID = userID;
     }
 
-    public String getGoodID() {
+    public int getGoodID() {
         return goodID;
     }
 
-    public void setGoodID(String goodID) {
+    public void setGoodID(int goodID) {
         this.goodID = goodID;
     }
 
@@ -122,28 +121,20 @@ public class Share implements Serializable{
         this.goodUrl = goodUrl;
     }
 
-    public String getGoodPriceCurrent() {
-        return goodPriceCurrent;
+    public String getGoodPrice() {
+        return goodPrice;
     }
 
-    public void setGoodPriceCurrent(String goodPriceCurrent) {
-        this.goodPriceCurrent = goodPriceCurrent;
+    public void setGoodPrice(String goodPrice) {
+        this.goodPrice = goodPrice;
     }
 
-    public String getGoodPriceOld() {
-        return goodPriceOld;
+    public String getGoodMall() {
+        return goodMall;
     }
 
-    public void setGoodPriceOld(String goodPriceOld) {
-        this.goodPriceOld = goodPriceOld;
-    }
-
-    public int getGoodFrom() {
-        return goodFrom;
-    }
-
-    public void setGoodFrom(int goodFrom) {
-        this.goodFrom = goodFrom;
+    public void setGoodMall(String goodMall) {
+        this.goodMall = goodMall;
     }
 
     @Override

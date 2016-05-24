@@ -14,8 +14,7 @@
 		</environment>
 	</environments>
 	<mappers>
-        <mapper resource="goodMapper.xml"/>
-		<mapper resource="goodsMapper.xml"/>
+		<mapper resource="goodMapper.xml"/>
         <mapper resource="sortMapper.xml"/>
         <mapper resource="userMapper.xml"/>
 		<mapper resource="shareMapper.xml"/>

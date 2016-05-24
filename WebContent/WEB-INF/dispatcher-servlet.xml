@@ -57,11 +57,11 @@
 	</bean>
 	<!-- daoImp -->
 	<bean id="sortDaoImp" class="com.wangziqing.goubige.mybatis.daoImp.SortDaoImp"></bean>
-	<bean id="goodDaoImp" class="com.wangziqing.goubige.mybatis.daoImp.GoodDaoImp"></bean>
+	<!--<bean id="goodDaoImp" class="com.wangziqing.goubige.mybatis.daoImp.GoodDaoImp"></bean>-->
 	<bean id="userDaoImp" class="com.wangziqing.goubige.mybatis.daoImp.UserDaoImp"></bean>
 	<!-- Service -->
 	<bean id="sortsService" class="com.wangziqing.goubige.springMVC.service.SortsService"></bean>
-	<bean id="goodsService" class="com.wangziqing.goubige.springMVC.service.GoodsService"></bean>
+	<!--<bean id="goodsService" class="com.wangziqing.goubige.springMVC.service.GoodsService"></bean>-->
 	<bean id="usersService" class="com.wangziqing.goubige.springMVC.service.UsersService"></bean>
 
 </beans> 

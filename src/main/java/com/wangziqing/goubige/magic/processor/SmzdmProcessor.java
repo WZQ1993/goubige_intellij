@@ -8,7 +8,7 @@ import com.wangziqing.goubige.magic.pipeline.SmzdmPipeline;
 import com.wangziqing.goubige.magic.util.DateUtils;
 import com.wangziqing.goubige.magic.util.PatternUtils;
 import com.wangziqing.goubige.model.Category;
-import com.wangziqing.goubige.model.Goods;
+import com.wangziqing.goubige.model.Good;
 import com.wangziqing.goubige.model.Mall;
 import com.wangziqing.goubige.mybatis.daoBase.DaoFactory;
 import com.wangziqing.goubige.mybatis.daoImp.CategoryDaoImp;
@@ -68,10 +68,10 @@ public class SmzdmProcessor implements PageProcessor {
 			JSONObject jsonObject=JSON.parseObject(jsonString);
 			JSONObject data=jsonObject.getJSONObject("data");
 			JSONArray rows=data.getJSONArray("rows");
-			List<Goods> list=Lists.newArrayList();
+			List<Good> list=Lists.newArrayList();
 			for(int i=0;i<rows.size();i++){
 				JSONObject object=rows.getJSONObject(i);
-				Goods good=new Goods();
+				Good good=new Good();
 				good.setTitle(object.getString("article_title"));
 				good.setUrl(object.getString("article_link"));
 				good.setPic(object.getString("article_pic"));
