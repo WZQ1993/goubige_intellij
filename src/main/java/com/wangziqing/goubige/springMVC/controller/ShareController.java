@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by WZQ_PC on 2016/5/16 0016.
@@ -24,13 +25,16 @@ public class ShareController {
     @Autowired
     ShareService shareService;
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void insert(@RequestBody String shareJson, HttpServletResponse response)
+    public void insert(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         //tag,data
-        //tag.data.code
-        JSONObject jsonObject = JSON.parseObject(shareJson);
-        Share share=JSON.parseObject(jsonObject.get("data").toString(),Share.class);
+        //code,tag
+        String tag= request.getParameter("tag");
+        Share share=JSON.parseObject(request.getParameter("data"),Share.class);
+
         shareService.insert(share);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("tag",tag);
         jsonObject.put("code",0);
         response.setHeader("Content-type", "text/html;charset=UTF-8");
         response.getWriter().print(jsonObject.toString());
@@ -41,7 +45,9 @@ public class ShareController {
             @PathVariable int ID,
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        Share share=shareService.getShareByID(ID);
+        Integer userID=request.getParameter("userID")==null?
+                null:Integer.valueOf(request.getParameter("userID"));
+        Share share=shareService.getShareByID(ID,userID);
         String tag= request.getParameter("tag");
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("data", share);
@@ -55,11 +61,22 @@ public class ShareController {
     @RequestMapping(value="",method=RequestMethod.GET)
     public void getShareByPage(HttpServletRequest request,HttpServletResponse response) throws IOException{
         int pageSize,pageNum;
+        List<Share> list;
+
         pageSize=Integer.parseInt(request.getParameter("pageSize"));
         pageNum=Integer.parseInt(request.getParameter("pageNum"));
+        Integer requestID=request.getParameter("requestUserID")==null?
+                0:Integer.valueOf(request.getParameter("requestUserID"));
+        String userID=request.getParameter("userID");
         String tag= request.getParameter("tag");
+
+        if(null!=userID){
+            list=shareService.getShareByUser(pageSize,pageNum,requestID,Integer.valueOf(userID));
+        }else{
+            list=shareService.getShareByPage(pageSize,pageNum,requestID);
+        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("list",shareService.getShareByPage(pageSize,pageNum));
+        jsonObject.put("list",list);
         jsonObject.put("tag",tag);
         jsonObject.put("code",0);
         response.setHeader("Content-type", "text/html;charset=UTF-8");

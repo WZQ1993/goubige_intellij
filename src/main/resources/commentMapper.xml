@@ -13,6 +13,7 @@
 		users.userImg as userImage
 		from comment,users
 		WHERE comment.shareID=#{2} and comment.userID=users.ID
+		ORDER BY comment.creatTime DESC
 		limit #{0},#{1};
 	</select>
 </mapper>

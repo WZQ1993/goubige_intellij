@@ -11,7 +11,8 @@ import java.util.List;
 public interface ShareOperation {
     public void insert(Share share);
     public void update(Share share);
-    public List<Share> getShareByPage(PageBean pageBean);
+    public List<Share> getShareByPage(int pageSize,int startRow,int requestUserID);
+    public List<Share> getShareUser(int pageSize,int startRow,int requestUserID,int userID);
     public Share getShareByID(int ID);
     public void supportNumIncrease(int ID);
     public void commentNumIncrease(int ID);

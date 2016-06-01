@@ -39,8 +39,82 @@ namespace的值习惯上设置成包名+sql映射文件名，
 	useCache="true">
 			select * from good where ID=#{ID}
 	</select>
-	<select id="getGoodsByPage" resultMap="goods" parameterType="com.wangziqing.goubige.model.PageBean"> 
-        <!-- order by id asc是指对查询后的结果进行升序排序 --> 
+	<select id="getGoodsByPage" resultMap="goods" parameterType="com.wangziqing.goubige.model.PageBean">
+        <!-- order by id asc是指对查询后的结果进行升序排序 -->
         select * from good limit #{startRow},#{pageSize};
-    </select> 
+    </select>
+	<select id="getGoodByCategory" resultMap="goods" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select * from good
+		WHERE good.categoryID=#{2}
+		limit #{0},#{1};
+	</select>
+	<insert id="starGood" parameterType="com.wangziqing.goubige.model.Star" useGeneratedKeys="true" keyProperty="ID">
+		  INSERT  INTO star VALUES(
+		  #{ID},
+		  #{goodID},
+		  #{userID},
+		  CURRENT_TIMESTAMP
+		  )
+
+	</insert>
+	<select id="hasStar" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM star
+		WHERE userID=#{0} AND goodID=#{1};
+	</select>
+	<insert id="hisGood" parameterType="com.wangziqing.goubige.model.His" useGeneratedKeys="true" keyProperty="ID">
+		INSERT  INTO his VALUES(
+		#{ID},
+		#{goodID},
+		#{userID},
+		CURRENT_TIMESTAMP
+		)ON DUPLICATE KEY UPDATE creatTime=CURRENT_TIMESTAMP;
+	</insert>
+	<select id="getStarGood" resultMap="goods" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select * from good,star
+		WHERE good.ID=star.goodID AND star.userID=#{2}
+		limit #{0},#{1};
+	</select>
+	<select id="getHistoryGood" resultMap="goods" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select * from good,his
+		WHERE good.ID=his.goodID AND his.userID=#{2}
+		ORDER BY creatTime DESC
+		limit #{0},#{1};
+	</select>
+	<insert id="addAndUpdateScore" parameterType="com.wangziqing.goubige.model.Score" useGeneratedKeys="true" keyProperty="ID">
+		INSERT INTO score VALUES(
+		#{userID},
+		CURRENT_TIMESTAMP,
+		#{score},
+		#{categoryID}
+		)
+		ON DUPLICATE KEY UPDATE
+		creatTime=CURRENT_TIMESTAMP,
+		score=score+#{score};
+	</insert>
+	<select id="getCategoryID" parameterType="int" resultType="int">
+		SELECT categoryID FROM good
+		WHERE good.ID=#{0};
+	</select>
+	<select id="getCategoryIDByUserID" parameterType="int" resultType="int">
+		select categoryID
+ 		from score where userID=#{0}
+ 		ORDER BY score
+ 		limit 3;
+	</select>
+	<select id="getRandByCategoryID" parameterType="int" resultMap="goods">
+		SELECT * FROM `good` AS t1 JOIN
+		(SELECT ROUND(RAND() * ((SELECT MAX(ID) FROM `good` where categoryID=#{0})-(SELECT MIN(ID) FROM `good` where categoryID=#{0}))+(SELECT MIN(ID) FROM `good` where categoryID=#{0})) AS ID) AS t2
+		WHERE t1.ID >= t2.ID
+		ORDER BY t1.ID LIMIT #{1};
+	</select>
+	<select id="getRand" parameterType="int" resultType="com.wangziqing.goubige.model.Good">
+		SELECT * FROM `good` AS t1 JOIN
+		(SELECT ROUND(RAND() * ((SELECT MAX(ID) FROM `good`)-(SELECT MIN(ID) FROM `good`))+(SELECT MIN(ID) FROM `good`)) AS ID) AS t2
+		WHERE t1.ID >= t2.ID
+		ORDER BY t1.ID LIMIT 1;
+	</select>
 </mapper>

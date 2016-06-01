@@ -24,8 +24,8 @@
 	</update>
 	<select id="getShareByID" parameterType="int"
 			resultType="com.wangziqing.goubige.model.Share" useCache="true">
-		select * from
-		share where ID=#{ID};
+		select * from share
+		where ID=#{ID};
 	</select>
 	<update id="supportNumIncrease" parameterType="int"
 			useGeneratedKeys="true" keyProperty="ID">
@@ -39,7 +39,7 @@
 		commentNum=commentNum+1
 		where ID=#{ID};
 	</update>
-	<select id="getShareByPage" resultType="com.wangziqing.goubige.model.Share" parameterType="com.wangziqing.goubige.model.PageBean">
+	<select id="getShareByPage" resultType="com.wangziqing.goubige.model.Share" parameterType="int">
 		<!-- order by id asc是指对查询后的结果进行升序排序 -->
 		select share.*,
 		good.pic as goodImage,
@@ -48,9 +48,29 @@
 		users.userName as userName,
 		good.url as goodUrl,
 		good.price as goodPrice,
-		good.mall as goodMall
+		good.mall as goodMall,
+		CASE when (SELECT COUNT(*) FROM support WHERE support.shareID=share.ID AND support.userID=#{2})>0 THEN true
+			 ELSE false END as supported
 		from share,good,users
 		WHERE share.goodID=good.ID and share.userID=users.ID
-		limit #{startRow},#{pageSize};
+		ORDER BY share.creatTime DESC
+		limit #{1},#{0};
+	</select>
+	<select id="getShareUser" resultType="com.wangziqing.goubige.model.Share" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select share.*,
+		good.pic as goodImage,
+		good.title as goodTitle,
+		users.userImg as userImage,
+		users.userName as userName,
+		good.url as goodUrl,
+		good.price as goodPrice,
+		good.mall as goodMall,
+		CASE when (SELECT COUNT(*) FROM support WHERE support.shareID=share.ID AND support.userID=#{2})>0 THEN true
+		ELSE false END as supported
+		from share,good,users
+		WHERE share.goodID=good.ID and share.userID=users.ID and share.userID=#{3}
+		ORDER BY share.creatTime DESC
+		limit #{1},#{0};
 	</select>
 </mapper>

@@ -29,13 +29,28 @@ public class UsersService {
 	public boolean updateheader(InputStream file,int ID){
 		return FilesUtils.getFileutils()
 		.saveFile(file, ID+".png",FilesUtils.getImageDir())
-		&&userDaoImp.updateHeader(ID,"/images/"+ID+".png");
+		&&userDaoImp.updateHeader(ID,ID+".png");
 	}
 	public Users getByID(int ID){
 		return userDaoImp.getByID(ID);
 	}
 	public List<Users> getUserByPage(int pageSize, int pageNum){
 		return userDaoImp.getUsersByPage(pageSize,pageNum);
+	}
+	public List<Users> getFans(int pageSize, int pageNum,int userID){
+		return userDaoImp.getFans(pageSize,pageNum,userID);
+	}
+	public List<Users> getFollows(int pageSize, int pageNum, int userID){
+		return userDaoImp.getFollows(pageSize,pageNum,userID);
+	}
+	public int askUserIsExist(String phone,String email){
+		return userDaoImp.askUserIsExist(phone,email);
+	}
+	public void addOrUpdate(Users user){
+		userDaoImp.addOrUpdate(user);
+		if(user.getID()==0){
+			user.setID(userDaoImp.askUserIsExist(user.getTelePhone(),user.getEmail()));
+		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

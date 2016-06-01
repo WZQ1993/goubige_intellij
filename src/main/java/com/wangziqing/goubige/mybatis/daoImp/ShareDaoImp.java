@@ -1,9 +1,12 @@
 package com.wangziqing.goubige.mybatis.daoImp;
 
 import com.wangziqing.goubige.model.PageBean;
+import com.wangziqing.goubige.model.Score;
 import com.wangziqing.goubige.model.Share;
+import com.wangziqing.goubige.mybatis.daoBase.GoodOperation;
 import com.wangziqing.goubige.mybatis.daoBase.MySessionFactoryUtil;
 import com.wangziqing.goubige.mybatis.daoBase.ShareOperation;
+import com.wangziqing.goubige.mybatis.daoBase.SupportOperation;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +21,12 @@ public class ShareDaoImp {
         SqlSession session = MySessionFactoryUtil.getSession();
         try {
             ShareOperation shareOperation=session.getMapper(ShareOperation.class);
+            GoodOperation goodOperation=session.getMapper(GoodOperation.class);
+            Score score=new Score();
+            score.setUserID(share.getUserID());
+            score.setCategoryID(goodOperation.getCategoryID(share.getGoodID()));
+            score.setScore(2);
+            goodOperation.addAndUpdateScore(score);
             shareOperation.insert(share);
             session.commit();
         } finally {
@@ -34,21 +43,38 @@ public class ShareDaoImp {
             session.close();
         }
     }
-    public Share getShareByID(int ID){
+    public Share getShareByID(int ID,Integer userID){
         SqlSession session = MySessionFactoryUtil.getSession();
         try {
             ShareOperation shareOperation=session.getMapper(ShareOperation.class);
-            return shareOperation.getShareByID(ID);
+            SupportOperation supportOperation=session.getMapper(SupportOperation.class);
+            Share share=shareOperation.getShareByID(ID);
+            if(null!=userID){
+                if(supportOperation.isSupport(ID,userID)>0){
+                    share.setSupported(true);
+                }else share.setSupported(false);
+            }
+            return share;
         } finally {
             session.close();
         }
     }
-    public List<Share> getShareByPage(int pageSize, int pageNum){
+    public List<Share> getShareByPage(int pageSize, int pageNum,int requestUserID){
         SqlSession session = MySessionFactoryUtil.getSession();
         int startRow=(pageNum-1)*pageSize;
         try {
             ShareOperation shareOperation=session.getMapper(ShareOperation.class);
-            return shareOperation.getShareByPage(new PageBean(startRow,pageSize));
+            return shareOperation.getShareByPage(pageSize,startRow,requestUserID);
+        } finally {
+            session.close();
+        }
+    }
+    public List<Share> getShareByUser(int pageSize, int pageNum,int requestUserID,int userID){
+        SqlSession session = MySessionFactoryUtil.getSession();
+        int startRow=(pageNum-1)*pageSize;
+        try {
+            ShareOperation shareOperation=session.getMapper(ShareOperation.class);
+            return shareOperation.getShareUser(pageSize,startRow,requestUserID,userID);
         } finally {
             session.close();
         }
@@ -94,13 +120,13 @@ public class ShareDaoImp {
     }
     private static void testGetByID(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
-        System.out.println(shareDaoImp.getShareByID(204).toString());
+        System.out.println(shareDaoImp.getShareByID(204,151).toString());
     }
     private static void testGetByPage(){
         ShareDaoImp shareDaoImp=new ShareDaoImp();
-        for (Share share:shareDaoImp.getShareByPage(10,2)
+        for (Share share:shareDaoImp.getShareByPage(10,1,151)
              ) {
-            System.out.println(share.getID());
+            System.out.println(share.getID()+"-"+share.isSupported());
         }
     }
     private static void testIncrease(){
@@ -109,6 +135,6 @@ public class ShareDaoImp {
         shareDaoImp.commentNumIncrease(204);
     }
     public static void main(String[] args){
-        testIncrease();
+        testGetByPage();
     }
 }

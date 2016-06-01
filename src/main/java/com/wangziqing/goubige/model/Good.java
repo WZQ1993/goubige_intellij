@@ -6,7 +6,7 @@ import java.sql.Timestamp;
  * Created by WZQ_PC on 2016/5/23 0023.
  */
 public class Good {
-    private String ID;
+    private int ID;
     private String title;
     private String url;
     private String pic;
@@ -24,11 +24,11 @@ public class Good {
 
     private int categoryID;
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

@@ -20,7 +20,9 @@ public class CommentDaoImp {
         SqlSession session = MySessionFactoryUtil.getSession();
         try {
             CommentOperation commentOperation=session.getMapper(CommentOperation.class);
+            ShareOperation shareOperation=session.getMapper(ShareOperation.class);
             commentOperation.insert(comment);
+            shareOperation.commentNumIncrease(comment.getShareID());
             session.commit();
         } finally {
             session.close();
@@ -43,7 +45,7 @@ public class CommentDaoImp {
         for(int i=0;i<100;i++){
             Comment comment=new Comment();
             comment.setUserID(151);
-            comment.setShareID(104);
+            comment.setShareID(204);
             comment.setContent("评论内容"+i+"：强烈推荐这个商品");
             commentDaoImp.insert(comment);
         }

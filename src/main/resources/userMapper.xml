@@ -49,6 +49,11 @@
 		select * from
 		users where (telePhone=#{0} or email=#{1})and passWord=#{2};
 	</select>
+	<select id="askUserIsExist"
+			resultType="Integer">
+		select users.ID from
+		users where telePhone=#{0} or email=#{1};
+	</select>
 	<update id="updateHeader">
 		update users set userImg=#{1} where ID=#{0};
 	</update>
@@ -56,4 +61,42 @@
 		<!-- order by id asc是指对查询后的结果进行升序排序 -->
 		select * from users limit #{startRow},#{pageSize};
 	</select>
+	<select id="getFans" resultType="com.wangziqing.goubige.model.Users" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select *
+		from users,fans
+		where fans.userID=#{2} and users.ID=fans.fansID
+		limit #{0},#{1};
+	</select>
+	<select id="getFollows" resultType="com.wangziqing.goubige.model.Users" parameterType="int">
+		<!-- order by id asc是指对查询后的结果进行升序排序 -->
+		select *
+		from users,fans
+		where fans.fansID=#{2} and users.ID=fans.userID
+		limit #{0},#{1};
+	</select>
+	<insert id="addOrUpdate" parameterType="com.wangziqing.goubige.model.Users"
+			useGeneratedKeys="true" keyProperty="ID">
+		insert into users values(
+		#{ID},
+		#{userName},
+		#{realName},
+		#{passWord},
+		#{telePhone},
+		#{email},
+		#{gender},
+		#{age},
+		#{userImg},
+		#{info},
+		'0',
+		CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+		ON DUPLICATE KEY UPDATE
+		ID=#{ID},
+		userName=#{userName},
+		realName=#{realName},
+		gender=#{gender},
+		age=#{age},
+		userImg=#{userImg},
+		info=#{info} ;
+	</insert>
 </mapper>

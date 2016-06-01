@@ -26,14 +26,16 @@ public class CommentController {
     @Autowired
     CommentService commentService;
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void insert(@RequestBody String JsonString, HttpServletResponse response)
+    public void insert(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         //tag,data
         //tag.data.code
-        JSONObject jsonObject = JSON.parseObject(JsonString);
-        Comment comment=JSON.parseObject(jsonObject.get("data").toString(),Comment.class);
+        String tag =request.getParameter("tag");
+        Comment comment=JSON.parseObject(request.getParameter("data"),Comment.class);
         commentService.insert(comment);
+        JSONObject jsonObject =new JSONObject();
         jsonObject.put("code",0);
+        jsonObject.put("tag",tag);
         response.setHeader("Content-type", "text/html;charset=UTF-8");
         response.getWriter().print(jsonObject.toString());
     }

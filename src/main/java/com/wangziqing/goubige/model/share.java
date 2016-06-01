@@ -25,6 +25,18 @@ public class Share implements Serializable{
     private String goodPrice;
     private String goodMall;
 
+    public boolean isSupported() {
+        return supported;
+    }
+
+    public void setSupported(boolean supported) {
+        this.supported = supported;
+    }
+
+    private boolean supported;
+
+
+
     public int getSupportNum() {
         return supportNum;
     }
@@ -141,12 +153,20 @@ public class Share implements Serializable{
     public String toString() {
         return "Share{" +
                 "ID=" + ID +
-                ", goodID='" + goodID + '\'' +
+                ", goodID=" + goodID +
                 ", userID=" + userID +
                 ", content='" + content + '\'' +
                 ", supportNum=" + supportNum +
                 ", commentNum=" + commentNum +
                 ", creatTime=" + creatTime +
+                ", goodImage='" + goodImage + '\'' +
+                ", goodTitle='" + goodTitle + '\'' +
+                ", userImage='" + userImage + '\'' +
+                ", userName='" + userName + '\'' +
+                ", goodUrl='" + goodUrl + '\'' +
+                ", goodPrice='" + goodPrice + '\'' +
+                ", goodMall='" + goodMall + '\'' +
+                ", supported=" + supported +
                 '}';
     }
 }

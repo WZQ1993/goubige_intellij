@@ -21,11 +21,14 @@ public class ShareService {
     public void update(Share share){
         shareDaoImp.update(share);
     }
-    public Share getShareByID(int ID){
-        return shareDaoImp.getShareByID(ID);
+    public Share getShareByID(int ID,Integer userID){
+        return shareDaoImp.getShareByID(ID,userID);
     }
-    public List<Share> getShareByPage(int pageSize,int pageNum){
-        return shareDaoImp.getShareByPage(pageSize,pageNum);
+    public List<Share> getShareByPage(int pageSize,int pageNum,int requestUserID){
+        return shareDaoImp.getShareByPage(pageSize,pageNum,requestUserID);
+    }
+    public List<Share> getShareByUser(int pageSize,int pageNum,int requestUserID,int userID){
+        return shareDaoImp.getShareByUser(pageSize,pageNum,requestUserID,userID);
     }
     public void supportNumIncrease(int ID){
         shareDaoImp.supportNumIncrease(ID);

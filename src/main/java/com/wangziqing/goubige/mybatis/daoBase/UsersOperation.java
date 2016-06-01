@@ -13,4 +13,8 @@ public interface UsersOperation {
 	public Users getByPhoneAndEmail(String telePhone,String email,String passWord);
 	public void updateHeader(int ID,String userImg);
 	public List<Users> getUsersByPage(PageBean pageBean);
+	public List<Users> getFans(int startRow,int pageSize,int userID);
+	public List<Users> getFollows(int startRow,int pageSize,int userID);
+	public Integer askUserIsExist(String phone,String email);
+	public void addOrUpdate(Users user);
 }

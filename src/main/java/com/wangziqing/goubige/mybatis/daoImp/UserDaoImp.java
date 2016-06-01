@@ -88,6 +88,46 @@ public class UserDaoImp {
 			session.close();
 		}
 	}
+	public List<Users> getFans(int pageSize, int pageNum,int userID){
+		SqlSession session = MySessionFactoryUtil.getSession();
+		int startRow=(pageNum-1)*pageSize;
+		try {
+			UsersOperation usersOperations=session.getMapper(UsersOperation.class);
+			return usersOperations.getFans(startRow,pageSize,userID);
+		} finally {
+			session.close();
+		}
+	}
+	public List<Users> getFollows(int pageSize, int pageNum,int userID){
+		SqlSession session = MySessionFactoryUtil.getSession();
+		int startRow=(pageNum-1)*pageSize;
+		try {
+			UsersOperation usersOperations=session.getMapper(UsersOperation.class);
+			return usersOperations.getFollows(startRow,pageSize,userID);
+		} finally {
+			session.close();
+		}
+	}
+	public int askUserIsExist(String phone,String email){
+		SqlSession session = MySessionFactoryUtil.getSession();
+		try {
+			UsersOperation usersOperations=session.getMapper(UsersOperation.class);
+			Integer ID=usersOperations.askUserIsExist(phone,email);
+			return ID==null?0:ID;
+		} finally {
+			session.close();
+		}
+	}
+	public void addOrUpdate(Users user){
+		SqlSession session = MySessionFactoryUtil.getSession();
+		try {
+			UsersOperation usersOperations=session.getMapper(UsersOperation.class);
+			usersOperations.addOrUpdate(user);
+			session.commit();
+		} finally {
+			session.close();
+		}
+	}
 	public void test(){
 		String testString="{'method':'authorizations'}";
 		JSONObject jsonObject = JSON.parseObject(testString);
@@ -118,7 +158,6 @@ public class UserDaoImp {
 			userDaoImp.insert(user);
 		}
 	}
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		UserDaoImp userDaoImp=new UserDaoImp();
