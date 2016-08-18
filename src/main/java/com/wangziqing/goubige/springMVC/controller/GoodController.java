@@ -30,7 +30,7 @@ public class GoodController {
 		int pageSize,pageNum;
 		List<Good> list;
 
-		pageSize=LangsUtils.parseInt(request.getParameter("pageSize"),20);
+		pageSize=LangsUtils.parseInt(request.getParameter("pageSize"),10);
 		pageNum=LangsUtils.parseInt(request.getParameter("pageNum"),1);
 		String tag= request.getParameter("tag");
 		String categoryID=request.getParameter("categoryID");
